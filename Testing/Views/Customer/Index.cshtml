@@ -5,9 +5,13 @@
 
 <h1>Index</h1>
 
+<div style="display: block">
+     <a href="/Customer/InsertCustomer/">Create a New Customer</a>
+ </div>
+
 @model IEnumerable<Customer>
 
-<h2>Customer</h2>
+<h2>Customers</h2>
 
 <!-- TODO:  Update the "table" class to spiff it up-->
 <table class="table">
@@ -28,14 +32,36 @@
     @foreach (var customer in @Model)
     {
         <tr>
-            <td>@customer.CustomerID</td>
+            <td><a href=/Customer/ViewCustomer/@customer.CustomerID>@customer.CustomerID</a></td>
             <td>@customer.FirstName</td>
             <td>@customer.MiddleInitial</td>
             <td>@customer.LastName</td>
-            <td>@customer.PhoneNumber</td>
-            <td>@customer.Email</td>
-            <td>@customer.DOB</td>
-            <td>@customer.Retired</td>
+           
+            @if (!string.IsNullOrEmpty(customer.PhoneNumber) && customer.PhoneNumber.Length >= 10)
+                {
+                    var x1 = @customer.PhoneNumber.Substring(0, 3);
+                    var x2 = @customer.PhoneNumber.Substring(3, 3);
+                    var x3 = @customer.PhoneNumber.Substring(6, 4);
+                <td>(@x1)@x2-@x3</td>
+                }
+                else
+                {
+                    @customer.PhoneNumber
+                }
+           
+            <td>@customer.EmailAddress</td>
+
+            @{
+                DateTime csharpDateTime = Convert.ToDateTime(customer.DateOfBirth);
+                string displayString = csharpDateTime.ToString("MM-dd-yyyy");
+                <td>@displayString</td>
+            }
+
+            @{
+                string result = (customer.Retired) ? "True" : "False";
+                 <td>@result</td>
+            }
+           
             <td>@customer.EmployeeCount</td>
             <td>@customer.LeadReference</td>
             <td>@customer.BestTimeToCall</td>

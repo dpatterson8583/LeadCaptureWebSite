@@ -22,8 +22,21 @@ namespace Testing.Controllers
         {
             return View();
         }
-
+        public IActionResult AboutMe()
+        {
+            return View();
+        }
+        public IActionResult ContactMe()
+        {
+            return View();
+        }
+      
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Terms()
         {
             return View();
         }

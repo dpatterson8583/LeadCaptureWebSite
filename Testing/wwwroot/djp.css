@@ -1,0 +1,52 @@
+﻿body {
+    background-color : lightblue;
+}
+
+.nav-link {
+    color: rgb(0, 0, 255);
+    text-decoration: none;
+}
+
+main {
+    max-width: 600px;
+    margin: 24px auto;
+    width: 100%;
+}
+
+section {
+    margin: 24px 0;
+    padding: 16px;
+}
+
+#title {
+    font-size: 40px;
+    font-weight: 800;
+}
+
+.d-inline {
+    display: inline;
+}
+
+nav > ul {
+    list-style: none;
+}
+
+body {
+    margin: 0;
+    background-color: lightgray;
+    color: #EEEEEE;
+}
+
+#avatar {
+    width: 100px;
+    margin: 32px auto;
+    border-radius: 9999px;
+}
+
+footer {
+    background-color: white;
+    color: #FFFFFF;
+}
+
+
+

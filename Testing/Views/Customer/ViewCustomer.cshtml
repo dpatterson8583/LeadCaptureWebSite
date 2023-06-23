@@ -1,0 +1,73 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@using LeadGeneration.Models;
+
+@{
+    ViewData["Title"] = "Customer";
+}
+
+<h1>Customer</h1><br />
+
+@model Customer
+
+<h3>@Model.EmailAddress Information</h3>
+
+<table class="table">
+    <tr>
+        <th>Customer ID</th>
+        <th>First Name</th>
+        <th>MI</th>
+        <th>Last Name</th>
+        <th>Phone #</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Retired?</th>
+        <th>Employee Count</th>
+        <th>Lead Reference</th>
+        <th>Best Time to Call</th>
+    </tr>
+
+        <tr>
+            <td>@Model.CustomerID</td>
+            <td>@Model.FirstName</td>
+            <td>@Model.MiddleInitial</td>
+            <td>@Model.LastName</td>
+
+            @*@{
+            var p = Model.PhoneNumber.ToString();
+            var formatted = $"({p[0..3]}) {p[3..6]}-{p[6..10]}";
+            }*@
+        <td>@Model.PhoneNumber</td>
+
+            <td>@Model.EmailAddress</td>
+            @{
+                DateTime csharpDateTime = Convert.ToDateTime(Model.DateOfBirth);
+                string displayString = csharpDateTime.ToString("MM-dd-yyyy");
+                <td>@displayString</td>
+            }
+
+            @{
+                string result = (Model.Retired) ? "True" : "False";
+                <td>@result</td>
+            }
+
+            <td>@Model.EmployeeCount</td>
+            <td>@Model.LeadReference</td>
+            <td>@Model.BestTimeToCall</td>
+        </tr>
+   
+</table>
+
+<div style="display: block">
+    <a href="/Customer/UpdateCustomer/@Model.CustomerID">Update this Customer</a>
+</div>
+
+<div style="display: block">
+    @using (Html.BeginForm("DeleteCustomer", "Customer", "Post"))
+    {
+        <input type="hidden" asp-for="CustomerID"  value="@Model.CustomerID" />
+        <input type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')" value="Delete this customer" />
+    }
+</div>

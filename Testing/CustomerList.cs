@@ -40,7 +40,7 @@ public class CustomerList : ICustomerList
         _conn.Execute("INSERT INTO customers (FIRSTNAME, MIDDLEINITIAL, LASTNAME, LEADREFERENCE, EMAILADDRESS," +
             "RETIRED,BESTTIMETOCALL,PHONENUMBER,DATEOFBIRTH,EMPLOYEECOUNT) " +
             "VALUES (@firstname, @middleinitial, @lastname, @leadreference, @emailaddress, @retired," +
-            "@besttimetocall,@phonenumber,@dateofbirth,@employeecount);",
+            "@besttimetocall, @phonenumber, @dateofbirth, @employeecount);",
             new { firstname = customerToInsert.FirstName,middleinitial=customerToInsert.MiddleInitial, lastname = customerToInsert.LastName, 
                 leadreference = customerToInsert.LeadReference, emailaddress=customerToInsert.EmailAddress, retired=customerToInsert.Retired, 
                 besttimetocall=customerToInsert.BestTimeToCall, customerToInsert.PhoneNumber, customerToInsert.DateOfBirth, 
@@ -49,7 +49,7 @@ public class CustomerList : ICustomerList
 
     public IEnumerable<LeadReference> GetLeadReferences()
     {
-        return _conn.Query<LeadReference>("SELECT * FROM reftypes;");
+        return _conn.Query<LeadReference>("SELECT RefType FROM reftypes;");
     }
 
     public Customer AssignLeadReference()

@@ -41,6 +41,7 @@ namespace LeadGeneration.Controllers
             {
                 return View("CustomerNotFound");
             }
+            //cust.LeadReferences = repo.GetLeadReferences();
             return View(cust);
         }
 

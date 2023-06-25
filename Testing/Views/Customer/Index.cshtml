@@ -3,17 +3,18 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1>Customer List</h1>
 
 <div style="display: block">
-     <a href="/Customer/InsertCustomer/">Create a New Customer</a>
+     <!--<a href="/Customer/InsertCustomer/">Create a New Customer</a>-->
+
+    <a href="/Customer/InsertCustomer/">
+        <button class="btn btn-primary">Create a New Customer </button>
+    </a>
  </div>
 
 @model IEnumerable<Customer>
 
-<h2>Customers</h2>
-
-<!-- TODO:  Update the "table" class to spiff it up-->
 <table class="table">
     <tr>
         <th>Customer ID</th>
@@ -46,7 +47,7 @@
                 }
                 else
                 {
-                    @customer.PhoneNumber
+                <td>@customer.PhoneNumber</td>
                 }
            
             <td>@customer.EmailAddress</td>

@@ -1,18 +1,13 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-
-@using LeadGeneration.Models;
+﻿@using LeadGeneration.Models;
 
 @{
     ViewData["Title"] = "Customer";
 }
 
-<h1>Customer</h1><br />
-
 @model Customer
 
-<h3>@Model.EmailAddress Information</h3>
+<h1>Customer:  @Model.FirstName @Model.LastName</h1>
+<br />
 
 <table class="table">
     <tr>
@@ -35,11 +30,17 @@
             <td>@Model.MiddleInitial</td>
             <td>@Model.LastName</td>
 
-            @*@{
-            var p = Model.PhoneNumber.ToString();
-            var formatted = $"({p[0..3]}) {p[3..6]}-{p[6..10]}";
-            }*@
-        <td>@Model.PhoneNumber</td>
+        @if (!string.IsNullOrEmpty(Model.PhoneNumber) && Model.PhoneNumber.Length >= 10)
+        {
+            var x1 = Model.PhoneNumber.Substring(0, 3);
+            var x2 = Model.PhoneNumber.Substring(3, 3);
+            var x3 = Model.PhoneNumber.Substring(6, 4);
+            <td>(@x1)@x2-@x3</td>
+        }
+        else
+        {
+            <td>@Model.PhoneNumber</td>
+        }
 
             <td>@Model.EmailAddress</td>
             @{
@@ -61,13 +62,17 @@
 </table>
 
 <div style="display: block">
-    <a href="/Customer/UpdateCustomer/@Model.CustomerID">Update this Customer</a>
-</div>
+    @*<a href="/Customer/UpdateCustomer/@Model.CustomerID">Update this Customer</a><br />*@
+    <a href="/Customer/UpdateCustomer/@Model.CustomerID">
+        <button class="btn btn-primary">Update Selected Customer </button> </a>
+</div><br />
 
 <div style="display: block">
     @using (Html.BeginForm("DeleteCustomer", "Customer", "Post"))
     {
         <input type="hidden" asp-for="CustomerID"  value="@Model.CustomerID" />
-        <input type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')" value="Delete this customer" />
+        <input type="submit" class="btn btn-primary" onclick="return confirm('Are you sure?')" value="Delete this Customer" />
+    
     }
+   <br /><button class="btn btn-primary" onclick="javascript:window.location='/Customer/Index';">Go To Customer List</button>
 </div>

@@ -1,0 +1,83 @@
+﻿@using LeadGeneration.Models;
+@{    
+    ViewData["Title"] = "Search";
+}
+
+<h1>Search Customer List</h1>
+
+<div style="display: block">
+     <!--<a href="/Customer/InsertCustomer/">Create a New Customer</a>-->
+
+    <a href="/Customer/InsertCustomer/">
+        <button class="btn btn-primary">Create a New Customer </button>
+    </a>
+ </div>
+
+<form asp-controller="Customer" asp-action="Search">
+    <p>
+            <strong><label for="">Select Search Field:  </label></strong>
+            <select name="SearchTarget" value="">
+                <option value="LastName">Last Name</option>
+                <option value="Email">Email</option>
+                <option value="LeadReference">Lead Reference</option>
+            </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+        <strong>Search Term:  </strong><input type="text" name="SearchString" />
+        <input type="submit" class="btn btn-primary" value="Filter" />
+    </p>
+</form>
+
+@model IEnumerable<Customer>
+
+<table class="table">
+    <tr><strong>
+        <th>Customer ID</th>
+        <th> Name</th>
+        <th>Phone #</th>
+        <th>Email</th>
+        <th>Date of Birth</th>
+        <th>Retired?</th>
+        <th>Employee Count</th>
+        <th>Lead Reference</th>
+        <th>Best Time to Call</th>
+        </strong>
+    </tr>
+
+    @foreach (var customer in @Model)
+    {
+        <tr>
+            <td><a href=/Customer/ViewCustomer/@customer.CustomerID>@customer.CustomerID</a></td>
+            <td>@customer.FirstName @customer.MiddleInitial. @customer.LastName</td>
+
+            @if (!string.IsNullOrEmpty(customer.PhoneNumber) && customer.PhoneNumber.Length >= 10)
+                {
+                    var x1 = @customer.PhoneNumber.Substring(0, 3);
+                    var x2 = @customer.PhoneNumber.Substring(3, 3);
+                    var x3 = @customer.PhoneNumber.Substring(6, 4);
+                <td>(@x1)@x2-@x3</td>
+                }
+                else
+                {
+                <td>@customer.PhoneNumber</td>
+                }
+           
+            <td>@customer.EmailAddress</td>
+
+            @{
+                DateTime csharpDateTime = Convert.ToDateTime(customer.DateOfBirth);
+                string displayString = csharpDateTime.ToString("MM-dd-yyyy");
+                <td>@displayString</td>
+            }
+
+            @{
+                string result = (customer.Retired) ? "True" : "False";
+                 <td>@result</td>
+            }
+           
+            <td>@customer.EmployeeCount</td>
+            <td>@customer.LeadReference</td>
+            <td>@customer.BestTimeToCall</td>
+        </tr>
+    }
+
+</table>

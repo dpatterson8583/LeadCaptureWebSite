@@ -28,6 +28,61 @@ namespace LeadGeneration.Controllers
             return View(customers);
         }
 
+        public async Task<IActionResult> Search(string searchString, string searchTarget)
+        {
+            if (repo.GetAllCustomers() == null)
+            {
+                return Problem("Entity set 'Customers'  is null.");
+            }
+
+            var customers = from c in repo.GetAllCustomers()
+                            select c;
+
+            if (!String.IsNullOrEmpty(searchString) && !String.IsNullOrEmpty(searchTarget))
+            {
+                if (searchTarget == "LastName")
+                {
+                    customers = customers.Where(c => c.LastName.ToLower()!.Contains(searchString.ToLower()));
+                }
+                else if (searchTarget == "Email")
+                {
+                    customers = customers.Where(c => c.EmailAddress.ToLower()!.Contains(searchString.ToLower()));
+                }
+                else if (searchTarget == "LeadReference")
+                {
+                    customers = customers.Where(c => c.LeadReference.ToLower()!.Contains(searchString.ToLower()));
+                }
+
+            }
+
+            return View( customers);
+
+            //var customers = repo.GetAllCustomers();
+            // return View(customers);
+        }
+
+        //Simple, single field search.  Attached the "X" to take it out of play.
+        public async Task<IActionResult> SearchX(string searchString)
+         {
+                if (repo.GetAllCustomers()  == null)
+                {
+                    return Problem("Entity set Customers'  is null.");
+                }
+
+                var customers = from c in repo.GetAllCustomers()
+                             select c;
+
+                if (!String.IsNullOrEmpty(searchString))
+                {
+                    customers = customers.Where(c => c.LastName.ToLower()!.Contains(searchString.ToLower()));
+                }
+
+                return View(customers);
+         
+            //var customers = repo.GetAllCustomers();
+           // return View(customers);
+        }
+        
         public IActionResult ViewCustomer(int id)
         {
             var customer = repo.GetCustomer(id);
@@ -62,7 +117,11 @@ namespace LeadGeneration.Controllers
 
         public IActionResult InsertCustomerToDatabase(Customer customerToInsert)
         {
-            repo.InsertCustomer(customerToInsert);
+            if(customerToInsert.FirstName != null && customerToInsert.LastName!=null && customerToInsert.PhoneNumber!=null)
+            {
+                repo.InsertCustomer(customerToInsert);
+            }
+            
             return RedirectToAction("Index");
         }
 

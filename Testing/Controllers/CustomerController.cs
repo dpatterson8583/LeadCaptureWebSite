@@ -28,7 +28,7 @@ namespace LeadGeneration.Controllers
             return View(customers);
         }
 
-        public async Task<IActionResult> Search(string searchString, string searchTarget)
+        public async Task<IActionResult>Search(string searchString, string searchTarget)
         {
             if (repo.GetAllCustomers() == null)
             {
@@ -55,7 +55,7 @@ namespace LeadGeneration.Controllers
 
             }
 
-            return View( customers);
+            return View(customers);
 
             //var customers = repo.GetAllCustomers();
             // return View(customers);
